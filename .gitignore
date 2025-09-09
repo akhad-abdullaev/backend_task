@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+static/
+local_settings.py
+
+# Migrations (keep if you want migrations tracked, otherwise ignore)
+# */migrations/
+# !*/migrations/__init__.py
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage / Test reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Pytest / Cache
+.pytest_cache/
+.cache/
+
+# Env files
+.env
+.envrc
+
+# Docker
+*.pid
+*.seed
+*.pid.lock

@@ -1,5 +1,5 @@
 from main.apps.user.models import User
-from main.apps.user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserSerializer
+from main.apps.user.serializers import UserLoginSerializer, UserRegistrationSerializer
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -8,25 +8,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 
-class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    # permission_classes = [permissions.IsAuthenticated]
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-
-user_create_api_view = UserCreateAPIView.as_view()
-
-
 class AuthUserRegistrationView(generics.GenericAPIView):
     serializer_class = UserRegistrationSerializer
     queryset = User.objects.all()
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -47,7 +32,7 @@ user_registration_api_view = AuthUserRegistrationView.as_view()
 
 
 class UserLoginView(TokenObtainPairView):
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     serializer_class = UserLoginSerializer
 
     def get(self, request, *args, **kwargs):

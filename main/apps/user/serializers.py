@@ -17,7 +17,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "username",
-            "role",
             'password',
             'confirm_password'
         )    
@@ -41,13 +40,5 @@ class UserLoginSerializer(TokenObtainPairSerializer):
         data['guid'] = self.user.guid
         data['first_name'] = self.user.first_name
         data['last_name'] = self.user.last_name
-        data['role'] = self.user.role
         return data
     
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
