@@ -1,4 +1,5 @@
 from main.apps.booking.models import Booking
+from main.apps.field.models import Field
 from main.apps.common.permissions import IsOwnerOrAdmin
 from ..booking.serializers import BookingCreateSerializer, BookingSerializer
 from rest_framework import generics
@@ -28,10 +29,18 @@ class BookingListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
+
+        if user.is_superuser:
+            return Booking.objects.all()
+
+        if Field.objects.filter(owner=user).exists():
+            return Booking.objects.filter(field__owner=user)
+        
         return Booking.objects.filter(user=user)
 
-    
-booking_list_api_view = BookingListAPIView().as_view()
+
+booking_list_api_view = BookingListAPIView.as_view()
+
 
 
 
