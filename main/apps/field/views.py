@@ -1,4 +1,4 @@
-from main.apps.common.permissions import IsRoleOwner
+from main.apps.common.permissions import IsOwner
 from ..field.serializers import FieldSerializer
 from ..field.models import Field
 from rest_framework import generics
@@ -17,7 +17,7 @@ from django.utils import timezone
 class FieldCreateAPIView(generics.CreateAPIView):
     serializer_class = FieldSerializer
     queryset = Field.objects.all()
-    permission_classes = [permissions.IsAuthenticated, IsRoleOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -35,7 +35,7 @@ field_create_api_view = FieldCreateAPIView().as_view()
 
 class FieldListAPIView(generics.ListAPIView):
     serializer_class = FieldSerializer
-    permission_classes = [permissions.IsAuthenticated, IsRoleOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         start_time = self.request.query_params.get('start_time')
@@ -78,7 +78,7 @@ field_detail_api_view = FieldDetailAPIView.as_view()
 class FieldUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Field.objects.all()
     serializer_class = FieldSerializer
-    permission_classes = [permissions.IsAuthenticated, IsRoleOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)

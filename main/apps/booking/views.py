@@ -1,5 +1,5 @@
 from main.apps.booking.models import Booking
-from main.apps.common.permissions import IsRoleOwner
+from main.apps.common.permissions import IsOwner
 from ..booking.serializers import BookingSerializer
 from rest_framework import generics
 from rest_framework import permissions
@@ -24,7 +24,7 @@ booking_create_api_view = BookingCreateAPIView.as_view()
 
 class BookingListAPIView(generics.ListAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [permissions.IsAuthenticated, IsRoleOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -38,7 +38,7 @@ booking_list_api_view = BookingListAPIView().as_view()
 class BookingDeleteAPIView(generics.DestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    permission_classes = [permissions.IsAuthenticated, IsRoleOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
